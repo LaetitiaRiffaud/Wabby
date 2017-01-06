@@ -1,0 +1,14 @@
+{
+    "name": "Wabby",
+    "description": "Replace new tab page with an inspirational photo and the weather.",
+    "version": "0.1",
+    "incognito": "split",
+    "chrome_url_overrides": {
+        "newtab": "index.html"
+    },
+    "manifest_version": 2,
+    "content_security_policy": "script-src 'self' https://ajax.googleapis.com https://cdnjs.cloudflare.com https://api.forecast.io; object-src 'self'",
+    "permissions": [
+        "geolocation"
+    ]
+}

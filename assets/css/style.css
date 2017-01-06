@@ -1,0 +1,98 @@
+body {
+    font-family: 'Brandon Grotesque', 'Open Sans', 'Roboto', 'Helvetica Neue', 'sans-serif';
+    font-size: 16px;
+    font-weight: 500;
+}
+
+h1, h2, h3, h4 {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    position: relative;
+    margin-right: 100px;
+
+    font-family: 'Brandon Grotesque Thin', 'Open Sans', 'Roboto', 'Helvetica Neue', 'sans-serif';
+    font-size: 145px;
+    font-weight: 100;
+    letter-spacing: -10px;
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: 100;
+    text-transform: uppercase;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+h4 {
+    font-size: 20px;
+}
+
+#image-container {
+    background-size: cover;
+    background-position: center center;
+    color: #FFFFFF;
+}
+
+.degree {
+    font-family: 'Brandon Grotesque Light', 'Open Sans', 'Roboto', 'Helvetica Neue', 'sans-serif';
+    position: absolute;
+    top: 27px;
+    right: -30px;
+    font-size: 70px;
+    font-weight: 400;
+}
+
+.large-icon {
+    width: 80px;
+    height: 80px;
+}
+
+.medium-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.small-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.vertical-center {
+    vertical-align: middle;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.orange {
+    color: #F8A63A;
+}
+
+.blue {
+    color: #3890AF;
+}
+
+.light-blue {
+    color: #A5EFEA;
+}
+
+.black {
+    color: #000000;
+}
+
+.text-muted {
+    color: #747474;
+}

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" ng-app="Wabby">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>New Tab - Wabby</title>
+
+        <!-- Favicon -->
+        <link rel="icon" ng-href="{{ '/assets/img/favicon.png' }}">
+
+        <link href='https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.css' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,400italic' rel='stylesheet' type='text/css'>
+
+        <link href='/assets/css/style.css' rel='stylesheet' type='text/css'>
+        <link href='/assets/css/fonts.css' rel='stylesheet' type='text/css'>
+
+        <!-- Angular -->
+        <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js' type='text/javascript'></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js' type='text/javascript'></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.min.js' type='text/javascript'></script>
+        <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-aria.min.js' type='text/javascript'></script>
+
+        <!-- Angular Material -->
+        <script src='https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.js' type='text/javascript'></script>
+
+        <!-- Moment -->
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js' type='text/javascript'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.4/moment-timezone.min.js' type='text/javascript'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.6/angular-moment.min.js' type='text/javascript'></script>
+
+        <!-- Angular Cache -->
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-cache/4.6.0/angular-cache.min.js' type='text/javascript'></script>
+
+        <script src='/js/app.js' type='text/javascript'></script>
+        <script src='/js/config.js' type='text/javascript'></script>
+        <script src='/js/preloader.js' type='text/javascript'></script>
+
+        <!-- Controller -->
+        <script src='/js/main.controller.js' type='text/javascript'></script>
+
+        <!-- Services -->
+        <script src='/js/forecast.service.js' type='text/javascript'></script>
+        <script src='/js/unsplash.service.js' type='text/javascript'></script>
+    </head>
+
+    <body ng-controller="MainController" layout="column" ng-cloak>
+
+        <md-content layout="row" flex="100" ng-if="image === null">
+            <div layout="column" flex="100" layout-align="center center">
+                <img ng-src="{{ '/assets/img/wabby.png' }}" width="75" height="75">
+            </div>
+        </md-content>
+
+        <md-content layout="row" flex="100" ng-if="image !== null">
+            <div id="image-container" layout="column" flex="60" ng-style="{'background':'transparent url(' + image + ') no-repeat', 'background-size': 'cover'}"></div>
+
+            <div layout="column" flex="40">
+                <!-- City, country, date and hour -->
+                <div layout="row" flex="20" layout-align="center center" class="mt-20">
+                    <div layout="column" flex="90" layout-align="center center">
+                        <div>
+                            <h2 ng-class="color" ng-bind="greetings"></h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Temperature and icon -->
+                <div layout="row" flex="50" layout-align="center center">
+                    <div layout="column" flex="90">
+                        <div layout="row" layout-align="start center">
+                            <div layout="column" flex="35" layout-align="start start">
+                                <div>
+                                    <h1 ng-class="color">
+                                        <span ng-bind="(currently.temperature | number:0)"></span>
+                                        <span class="degree">°</span>
+                                    </h1>
+                                </div>
+                            </div>
+                            <div layout="column" flex="45" layout-align="start start">
+                                <div class="large-icon">
+                                    <img class="large-icon" ng-src="{{ '/assets/img/' + color + '/' + currently.icon + '.svg' }}">
+                                </div>
+                            </div>
+
+                            <div layout="column" flex="20" layout-align="start start">
+                                <div layout="row">
+                                    <div>
+                                        <img class="small-icon vertical-center" ng-src="{{ '/assets/img/' + color + '/umbrellas.svg' }}">&nbsp;&nbsp;&nbsp;<span class="vertical-center" ng-bind="(currently.precipProbability * 100 | number:0) + '%'"></span>
+                                    </div>
+                                </div>
+                                <div layout="row" class="mt-20 mb-20">
+                                    <div>
+                                        <img class="small-icon vertical-center" ng-src="{{ '/assets/img/' + color + '/windsock.svg' }}">&nbsp;&nbsp;&nbsp;<span class="vertical-center" ng-bind="(currently.windSpeed * 18 / 5 | number:0) + ' km/h'"></span>
+                                    </div>
+                                </div>
+
+                                <div layout="row">
+                                    <div>
+                                        <img class="small-icon vertical-center" ng-src="{{ '/assets/img/' + color + '/cloudy.svg' }}">&nbsp;&nbsp;&nbsp;<span class="vertical-center" ng-bind="(currently.cloudCover * 100 | number:0) + '%'"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Forecast -->
+                <div layout="row" flex="30" layout-align="center center">
+                    <div layout="column" flex="90">
+                        <div layout="row" flex="100" layout-align="start center">
+                            <div layout="column" flex layout-align="center center" ng-repeat="daily in forecast.data" ng-if="$index < 5">
+                                <div>
+                                    <h3 ng-bind="moment(daily.time, 'X').format('ddd')"></h3>
+                                </div>
+                                <div>
+                                    <img class="medium-icon" ng-src="{{ '/assets/img/' + color + '/' + daily.icon + '.svg' }}">
+                                </div>
+                                <div>
+                                    <h3>
+                                        <span ng-bind="(daily.temperatureMin | number:0) + '° / '" class="text-muted"></span>
+                                        <span ng-bind="(daily.temperatureMax | number:0) + '°'"></span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </md-content>
+
+    </body>
+</html>
